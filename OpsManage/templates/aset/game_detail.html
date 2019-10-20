@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+{% load i18n %}
+  {% block content %}
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="/static/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+	<!--    弹窗开始样式 -->
+   	<script src="/static/dist/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+   	<link rel="stylesheet" type="text/css" href="/static/dist/css/xcConfirm.css"/>
+   	<!--   csrf -->
+	<script src="/static/js/csrf.js"></script>
+
+    <!-- Multiselect JavaScript -->
+    <script type="text/javascript" src="/static/dist/js/bootstrap-select.js"></script>
+
+    <!-- Echat JavaScript -->
+    <script type="text/javascript" src="/static/js/echarts.js"></script>
+
+    <!-- Datetimepicker -->
+    <link rel="stylesheet" href="/static/dist/css/bootstrap-datetimepicker.min.css" type="text/css"/>
+    <script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
+
+    <!-- jquery ui -->
+    <link rel="stylesheet" href="/static/dist/css/jquery-ui.css">
+    <script src="/static/js/jquery-ui.js"></script>
+
+    <!-- artDialog -->
+    <link rel="stylesheet" href="/static/dist/css/artdialog.css">
+    <script src="/static/js/artDialog.js"></script>
+     <div class="block span15">
+
+            <table class="table">
+                <tr>
+                  <th width="15%" align="center">{% trans "游戏名称" %}</th>
+                   <th  align="center" >{{game_config.name}}</th>
+                </tr>
+                  <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "App Name" %}</th>
+                   <th  align="center" valign="middle">{{game_config.app_name | safe}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "利润率" %}</th>
+                   <th  align="center" valign="middle">{{game_config.profit | safe}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "是否统计" %}</th>
+                   <th  align="center" valign="middle">{{game_config.statistics}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "发行区域/时区" %}</th>
+                   <th  align="center" valign="middle">{{game_config.zone}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "Andriod 标志符" %}</th>
+                   <th  align="center" valign="middle">{{game_config.android_flag}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "Andriod appid" %}</th>
+                   <th  align="center" valign="middle">{{game_config.android_appid}}</th>
+                </tr>
+                 <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "IOS 标志符" %}</th>
+                   <th  align="center" valign="middle">{{game_config.ios_flag}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "IOS appid" %}</th>
+                   <th  align="center" valign="middle">{{game_config.ios_appid}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "游戏服务器地址" %}</th>
+                   <th  align="center" valign="middle">{{game_config.game_host}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "游戏服数据库账号" %}</th>
+                   <th  align="center" valign="middle">{{game_config.game_user}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "游戏服数据库密码" %}</th>
+                   <th  align="center" valign="middle">{{game_config.game_pwd}}</th>
+                </tr>
+                <tr>
+                  <th width="15%" align="center" valign="middle" >{% trans "游戏服数据库名" %}</th>
+                   <th  align="center" valign="middle">{{game_config.game_dbname}}</th>
+                </tr>
+
+            </table>
+    </div>
+{% endblock %}
+
+  </html>

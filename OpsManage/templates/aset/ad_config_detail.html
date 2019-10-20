@@ -1,0 +1,135 @@
+{% load i18n %}
+
+ <div class="tab-pane fade in active" id="all_act">
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+         <div class="panel-body">
+
+          <div class="tab-content">
+             <div class="tab-pane fade in active" id="profile">
+               <div class="row">
+                    <div class="col-lg-12">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="ad_config_table">
+                            <thead>
+                                <tr class="thr_o">
+                                    <th class="text-center">时间</th>
+                                    <th class="text-center">项目</th>
+                                    <th class="text-center">平台</th>
+                                    <th class="text-center">国家</th>
+                                    <th class="text-center">语言</th>
+                                    <th class="text-center">渠道</th>
+                                    <th class="text-center">CPI</th>
+                                    <th class="text-center">广告花费($)</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for el in ad_config_list %}
+                                <tr class="odd gradeX tdr_o">
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.date }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.project }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.platform }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.country }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.language }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.channel }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.cpi }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.ad_cost }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">
+                                        <button  type="button" class="btn btn-default" onclick="editCron(this,{{el.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <button  type="button" class="btn btn-default" onclick="deleteCron(this,{{el.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                  </div>
+               </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var oTable = $('#ad_config_table').dataTable( {
+            "bPaginate": false,
+            "bStateSave": true,
+            dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+        } );
+        oTable.$('td').editable( '/ad_config_mod/1/', {
+            "callback": function( sValue, y ) {
+                var aPos = oTable.fnGetPosition( this );
+                oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+            },
+            "submitdata": function ( value, settings ) {
+                return {
+                    "id": $(this).closest('tr').children('td').eq(0).html(),
+                    "column": oTable.fnGetPosition( this )[2]
+                };
+            },
+            "placeholder": "Edit",
+            "height": "25px",
+            "width": "100%",
+        });
+        oTable.$('td:last').unbind("click");
+        for(var i=2; i<8; i++){
+            oTable.$("td:nth-child("+i+")").unbind("click");
+        }
+        oTable.$("td:nth-child(5)").unbind("click");
+    });
+
+    function editCron(obj,id){
+	     art.dialog({
+             title: '广告花费修改',
+             content: '<iframe src=/ad_update_list/' + id + "/" + ' width="450"  height="550" frameborder="0" allowtransparency="true"  marginheight="0" marginwidth="0" ></iframe>',
+             okValue: '确定',
+         });
+    };
+
+    function deleteCron(obj,id){
+		var txt=  "是否确认删除？";
+		var btnObj = $(obj);
+		btnObj.attr('disabled',true);
+		var option = {
+			title: "删除广告花费",
+			btn: parseInt("0011",2),
+			onOk: function(){
+				$.ajax({
+					  type: 'DELETE',
+					  url: '/ad_config_mod/'+id+'/',
+				      success:function(response){
+				    	btnObj.removeAttr('disabled');
+				    	if (response["code"]=="200"){
+                            ad_config_check();
+		                }
+				    	else{
+			        		window.wxc.xcConfirm(response["msg"], window.wxc.xcConfirm.typeEnum.error);
+			        	}
+				      },
+		              error:function(response){
+		            	btnObj.removeAttr('disabled');
+		            	window.wxc.xcConfirm("删除失败！", window.wxc.xcConfirm.typeEnum.error);
+		              }
+					});
+			},
+			onCancel:function(){
+			},
+			onClose:function(){
+			}
+		}
+		window.wxc.xcConfirm(txt, "custom", option);
+	}
+
+</script>

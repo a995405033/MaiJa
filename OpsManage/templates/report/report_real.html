@@ -1,0 +1,178 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">实时导入</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>实时导入</h3>
+{#        <button onclick="report_real_collect()">手动归类</button>#}
+	</div>
+</div>
+
+<div id="page-wrapper">
+
+	<div class="row">
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <br class="well">
+                        <div style="width:32px; height:auto; float:left; display:inline"><label> 项目 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                            <select name="project" id="project" class="selectpicker" data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" onchange="selectChannel()" style="height:26px">
+                                {% for project in projectValues %}
+                                    <option value="{{ project }}" >{{ project }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="width:38px; height:auto; float:left; display:inline"><label> 语言 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                            <select name="language" id="language" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+                                {% for language in languageValues %}
+                                    <option value={{ language }} >{{ language }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="width:32px; height:auto; float:left; display:inline"><label> 渠道 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                            <select name="channal_perms" id="ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" onchange="selectChannel()" style="height:26px">
+                                {% for channel in channelValues %}
+                                    <option value="{{ channel }}" >{{ channel }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="width:38px; height:auto; float:left; display:inline"><label> 国家 </label></div>
+                        <div style="width:240px; height:auto; float:left; display:inline">
+                            <select name="country" id="country" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">
+                                {% for country in countryValues %}
+                                    <option value={{ country }} >{{ country }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <br></br>
+                        <label>时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                        <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                        <label><button type="button"  class="btn btn-primary" onclick="report_real_check()" ><i class="fa fa-search"></i>查找</button></label>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="li_all"><a href="#all_act" data-toggle="tab"> 总实时导入 </a>
+                        </li>
+                        <li id="li_ios"><a href="#ios_act" data-toggle="tab"> IOS实时导入 </a>
+                        </li>
+                        <li id="li_and"><a href="#android_act" data-toggle="tab"> Android实时导入 </a>
+                        </li>
+                        <li id="li_and"><a href="#data_act" data-toggle="tab"> 数据显示 </a>
+                        </li>
+                   </ul>
+                <br />
+            <div class="tab-content" id="content_id">
+             <div class="tab-pane fade in active" id="game_act">
+	          <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                      <div class="tab-content">
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+ <div class="tab-pane fade" id="web_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-gear"></i>IOS
+                </div>
+                <div class="panel-body">
+            <div class="well">
+                </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+           </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd',
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose: true,
+        endDate: new Date()
+    });
+
+    function report_real_check(){
+         $.post("/report_real_check/",{
+             start_time:$('#start_time').val(),
+             end_time:$('#end_time').val(),
+             channels: $('#ch_perms').selectpicker('val'),
+             countrys: $('#country').selectpicker('val'),
+             languages: $('#language').selectpicker('val'),
+             project:$('#project').val()
+
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_real_collect(){
+         $.post("/report_real_collect/",{
+
+         },function(data){
+
+        });
+    }
+
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({
+
+        });
+    });
+
+    function mytime(){
+        var da = new Date();
+        offset = da.getTimezoneOffset()*60000;
+        var localTime = da.getTime();
+        var utc = localTime + offset;
+        var gmt3 = 3*3600000;
+        var gmt3date = new Date(utc + gmt3);
+        var y = gmt3date.getFullYear();  //获取年
+   	    var m = gmt3date.getMonth() + 1;  //获取月
+        m = m < 10 ? '0' + m : m;  //判断月是否大于10
+       	var d = gmt3date.getDate();  //获取日
+       	d = d < 10 ? ('0' + d) : d;  //判断日期是否大10
+   	    gmt3date_d = y + '-' + m + '-' + d;  //返回时间格式
+        {#var gmt3date_d = gmt3date.toLocaleDateString();#}
+        document.getElementById("start_time").value = gmt3date_d;
+    }
+    mytime()
+
+</script>

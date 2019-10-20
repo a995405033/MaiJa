@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load i18n %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="description">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="/static/plugins/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+    <link href="/static/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <link href="/static/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+    <link href="/static/plugins/xcharts/xcharts.min.css" rel="stylesheet">
+    <link href="/static/plugins/select2/select2.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+
+    <title>SGame BI 平台</title>
+
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <script src="/static/plugins/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link href="/static/vendor/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="/static/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- DataTables JavaScript -->
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!--   csrf -->
+    <script src="/static/js/csrf.js"></script>
+
+    <!-- artDialog -->
+
+    <link rel="stylesheet" href="/static/dist/css/artdialog.css">
+    <script src="/static/js/artDialog.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+            <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<!--Start Header-->
+<div id="screensaver">
+    <canvas id="canvas"></canvas>
+    <i class="fa fa-lock" id="screen_unlock"></i>
+</div>
+<div id="modalbox">
+    <div class="devoops-modal">
+        <div class="devoops-modal-header">
+            <div class="modal-header-name">
+                <span>Basic table</span>
+            </div>
+            <div class="box-icons">
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="devoops-modal-inner">
+        </div>
+        <div class="devoops-modal-bottom">
+        </div>
+    </div>
+</div>
+<header class="navbar">
+    <div class="container-fluid expanded-panel">
+        <div class="row">
+            <div id="logo" class="col-xs-12 col-sm-2">
+                <a href="/">SGame BI 平台</a>
+            </div>
+            <div id="top-panel" class="col-xs-12 col-sm-10">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-4">
+                        <a href="#" class="show-sidebar">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <div id="search">
+                            <input type="text" placeholder="search"/>
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-8 top-panel-right">
+                        <ul class="nav navbar-nav pull-right panel-menu">
+
+                            <!-- /.dropdown -->
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="welcome">Welcome </span>
+                                    {{ user }} <i class="fa fa-user fa-fw"></i>
+                                    <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a class="ajax-link" href="/user/center/"><i class="fa fa-user fa-fw"></i>
+                                        Settings</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="/login?next=/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                    </li>
+                                </ul>
+                                <!-- /.dropdown-user -->
+                            </li>
+                            <!-- /.dropdown -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div id="sidebar-left" class="col-xs-2 col-sm-2">
+            <ul class="nav main-menu">
+                <li>
+                    <a href="/" class="active">
+                        <i class="fa fa-dashboard"></i>
+                        <span class="hidden-xs">主页</span>
+                    </a>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"><i class="fa fa-group "></i> {% trans "用户中心" %}<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level dropdown-menu">
+                        {% if perms.auth.change_user %}
+                            <li>
+                                <a class="ajax-link" href="/users/manage/">{% trans "用户管理" %}</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a class="ajax-link" href="/user/center/">{% trans "用户配置" %}</a>
+                        </li>
+                        <li>
+                            <a href="/logout">{% trans "退出" %}</a>
+                        </li>
+                    </ul>
+                </li>
+                {% if perms.OpsManage.can_read_operation_log_record %}
+                    <li>
+                        <a class="ajax-link" href="/conf_log/">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <span class="hidden-xs">{% trans "操作日志" %}</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+        <!--Start Content-->
+        <div id="content" class="col-xs-12 col-sm-10">
+            <div class="preloader">
+                <img src="/static/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
+            </div>
+            <div id="ajax-content"></div>
+        </div>
+        <!--End Content-->
+
+        <div class="modal fade" id="myAddUserModal" tabindex="-1" role="dialog" aria-labelledby="myAddUserModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myAddUserModalLabel">
+                            新增用户
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="register" class="main form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><i class="fa fa-user"></i></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" placeholder="Username" name="username"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><i class="fa fa-file"></i></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" placeholder="Name" name="name"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><i class="fa fa-envelope"></i></label>
+                                    <div class="col-sm-6">
+                                        <input type="email" class="form-control" placeholder="Email" name="email"
+                                               required/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><i class="fa fa-lock"></i></label>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" placeholder="Password"
+                                               name="password"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"><i class="fa fa-retweet"></i></label>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" placeholder="Repeat password"
+                                               name="c_password"/>
+                                    </div>
+                                </div>
+                                <div class="space-24"></div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="userRegister(this)">
+                            添加
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <div class="modal fade" id="myGroupModal" tabindex="-1" role="dialog" aria-labelledby="myGroupModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myGroupModalLabel">
+                            添加用户组
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="group_assets">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="form-field-4"><strong>组名</strong></label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" name="name"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="addGroupData(this)">
+                            添加
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+    </div>
+</div>
+<!--End Container-->
+<!--    弹窗开始样式 -->
+<script src="/static/dist/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/static/dist/css/xcConfirm.css"/>
+
+<!-- Multiselect CSS -->
+<link rel="stylesheet" href="/static/dist/css/bootstrap-select.css" type="text/css"/>
+<!-- Multiselect JavaScript -->
+<script type="text/javascript" src="/static/dist/js/bootstrap-select.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="/static/plugins/justified-gallery/jquery.justifiedgallery.min.js"></script>
+<script src="/static/plugins/tinymce/tinymce.min.js"></script>
+<script src="/static/plugins/tinymce/jquery.tinymce.min.js"></script>
+<!-- All functions for this theme + document.ready processing -->
+<script src="/static/js/devoops.js"></script>
+
+<script src="/static/js/jquery.jeditable.js"></script>
+
+<!-- Datetimepicker -->
+<link rel="stylesheet" href="/static/dist/css/bootstrap-datetimepicker.min.css" type="text/css"/>
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
+
+<!-- Echat JavaScript -->
+<script type="text/javascript" src="/static/js/echarts.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
+
+</body>
+</html>
+

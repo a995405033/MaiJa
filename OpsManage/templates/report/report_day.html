@@ -1,0 +1,208 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">报表</a></li>
+            <li><a href="#">日报</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+    <div class="col-xs-10 col-sm-2">
+        <h3>日报</h3>
+    </div>
+</div>
+
+<div id="page-wrapper">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="well">
+                        <form role="form" method="post" id="addCrontab" class="main form-horizontal"
+                              enctype="multipart/form-data">{% csrf_token %}
+                            <div class="clearfix form-actions form-search">
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 项目 </label>
+                                </div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="project" id="project" class="selectpicker" data-live-search="true"
+                                            data-selected-text-format="count > 3" data-size="5" style="height:26px">
+                                        {% for project in projectValues %}
+                                            <option value={{ project }} {% if project == 'roh' %}selected="selected"{% endif %}>{{ project }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 语言 </label>
+                                </div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="language" id="language" class="selectpicker" multiple
+                                            data-live-search="true" data-selected-text-format="count > 3" data-size="5"
+                                            data-actions-box="true" style="height:26px">
+                                        {% for language in languageValues %}
+                                            <option value={{ language }}>{{ language }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> app来源 </label>
+                                </div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="source" id="source" class="selectpicker" multiple
+                                            data-live-search="true" data-selected-text-format="count > 3" data-size="5"
+                                            data-actions-box="true" style="height:26px">
+                                        {% for source in sourceValues %}
+                                            <option value={{ source }}>{{ source }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <label></label>
+                                <label>时间范围 <input type="text" id="start_time" name="start_time" placeholder=""
+                                                   class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00"
+                                                   title="例如2017-01-01" AUTOCOMPLETE="off"
+                                                   value={{ this_week_start_dt }}></label>
+                                <label><i class="fa fa-exchange"></i> <input type="text" id="end_time" name="end_time"
+                                                                             placeholder="" class="form_datetime"
+                                                                             data-date-format="yyyy-mm-dd HH:mm:00"
+                                                                             title="例如2017-01-01"
+                                                                             AUTOCOMPLETE="off"></label>
+                                <label>
+                                    <div id="pay_status" style="display: none">
+                                        <label>付费时间范围 <input type="text" id="f_start_time" name="f_start_time"
+                                                             placeholder="" class="form_datetime"
+                                                             data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"
+                                                             AUTOCOMPLETE="off"></label>
+                                        <label><i class="fa fa-exchange"></i> <input type="text" id="f_end_time"
+                                                                                     name="f_end_time" placeholder=""
+                                                                                     class="form_datetime"
+                                                                                     data-date-format="yyyy-mm-dd HH:mm:00"
+                                                                                     title="例如2017-01-01"
+                                                                                     AUTOCOMPLETE="off"></label>
+                                    </div>
+                                </label>
+
+                                <label><input type="checkbox" id="checkbox_id" name="pay_status"
+                                              onclick="set_pay_status(this)" id="day_pay_status"/>展示付费金额 </label>
+                                <label>
+                                    <button type="button" class="btn btn-primary" onclick="report_day_check()"><i
+                                            class="fa fa-search"></i>查找
+                                    </button>
+                                </label>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="li_all"><a href="#all_act" data-toggle="tab"> 总 </a>
+                        </li>
+                        <li id="li_ios"><a href="#ios_act" data-toggle="tab"> IOS </a>
+                        </li>
+                        <li id="li_and"><a href="#android_act" data-toggle="tab"> Android </a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <div class="tab-content" id="content_id">
+                        <div class="tab-pane fade in active" id="game_act">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="tab-content">
+                                            </div>
+                                            <!-- /.row (nested) -->
+                                        </div>
+                                        <!-- /.panel-body -->
+                                    </div>
+                                    <!-- /.panel -->
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="web_act">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <i class="fa fa-gear"></i>IOS
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="well">
+                                            </div>
+                                            <!-- /.row (nested) -->
+                                        </div>
+                                        <!-- /.panel-body -->
+                                    </div>
+                                    <!-- /.panel -->
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#email_list_table').DataTable({
+            responsive: true
+        });
+    });
+
+    $(document).ready(function () {
+        $('#web_activitt_table').DataTable({
+            responsive: true
+        });
+    });
+
+    function set_pay_status(obj) {
+        if ($(obj).is(":checked")) {
+            $('#pay_status').show();
+        }
+        else {
+            $('#pay_status').hide();
+        }
+    }
+
+    $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: "month",
+        autoclose: true
+    });
+
+    function report_day_check() {
+        $.post("/report_day_check/", {
+            sources: $('#source').val(),
+            languages: $('#language').val(),
+            project: $('#project').val(),
+            start_time: $('#start_time').val(),
+            end_time: $('#end_time').val(),
+            f_start_time: $('#f_start_time').val(),
+            f_end_time: $('#f_end_time').val(),
+            checkbox: $('#checkbox_id').is(":checked")
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({});
+    });
+
+    report_day_check()
+</script>

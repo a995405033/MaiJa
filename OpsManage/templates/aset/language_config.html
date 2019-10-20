@@ -1,0 +1,224 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">游戏配置</a></li>
+            <li><a href="#">语言版本配置</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>语言版本配置</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="tab-content" id="content_id">
+             <div class="tab-pane fade in active" id="game_act">
+	          <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                      <div class="well">
+{#                        <label><button type="button"  class="btn btn-primary" id="create_la">添加语言</button>#}
+{#                        </label>#}
+                      </div>
+                      <div class="tab-content">
+                        <div class="row">
+                         <div class="col-lg-12">
+                         <table width="100%" class="table table-striped table-bordered table-hover" id="ad_config_table">
+                            <thead>
+                                <tr class="thr_o">
+                                    <th class="text-center">语言</th>
+                                    <th class="text-center">中文名称</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for el in language_config_list %}
+                                    <tr class="odd gradeX tdr_o">
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.language }} </td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ el.name }}</td>
+                                    <td class="text-center" style="text-align:center;vertical-align:middle">
+                                        <button  type="button" class="btn btn-default" onclick="deleteCron(this,{{el.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                        </div>
+                       </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            </div>
+
+           </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+</div>
+
+<div id="dialog-la-form">
+  <p class="validateTips"></p>
+  <form id="ad_language_form">
+    <fieldset style="padding:0; border:0; margin-top:25px; margin-left:20px;">
+      <label style="display: block" for="language">语言</label>
+{#      <input style="display: block;margin-bottom:12px; width:95%; padding: .4em;" type="text" name="language_a" id="language_a" class="text ui-widget-content ui-corner-all">#}
+      <select name="language_a" id="language_a" style="display: block;margin-bottom:12px; width:95%; padding: .4em;" type="text">
+                        <option selected="selected" value="">全部</option>
+                         {% for ul in dblanguages %}
+                                <option value="{{ul}}">{{ul}}</option>
+                         {% endfor %}
+                    </select>
+        <label style="display: block" for="name">中文名称</label>
+      <input style="display: block;margin-bottom:12px; width:95%; padding: .4em;" type="text" name="name_a" id="name_a" class="text ui-widget-content ui-corner-all">
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var oTable = $('#ad_config_table').dataTable( {
+            "bPaginate": false,
+            "bStateSave": true,
+            dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+        } );
+    } );
+
+    $(document).ready( function() {
+        var dialog = $( "#dialog-la-form" ).dialog({
+        title: '添加',
+        autoOpen: false,
+        height: 600,
+        width: 450,
+        modal: true,
+        buttons: {
+        "添加语言": function() {
+            $.ajax({
+                type: "POST",
+                url:"/language_config_add/",
+                data:$('#ad_language_form').serialize(),
+                async: false,
+                cache: false,
+                error: function(request) {
+                    $('#ad_language_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加失败！", window.wxc.xcConfirm.typeEnum.error);
+                },
+                success: function(data) {
+                    $('#ad_language_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加成功！", window.wxc.xcConfirm.typeEnum.success);
+                }
+            });
+        },
+        "取消": function() {
+            $('#ad_language_form')[0].reset();
+            dialog.dialog( "close" );
+        }
+        },
+      open: function (event, ui) {
+          $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+        }
+        });
+
+    $( "#create_la" ).button().on( "click", function() {
+        var dialog = $( "#dialog-la-form" ).dialog({
+        title: '添加',
+        autoOpen: false,
+        height: 600,
+        width: 450,
+        modal: true,
+        buttons: {
+        "添加语言": function() {
+            $.ajax({
+                type: "POST",
+                url:"/language_config_add/",
+                data:$('#ad_language_form').serialize(),
+                async: false,
+                cache: false,
+                error: function(request) {
+                    $('#ad_language_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加失败！", window.wxc.xcConfirm.typeEnum.error);
+                },
+                success: function(data) {
+                    $('#ad_language_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加成功！", window.wxc.xcConfirm.typeEnum.success);
+                }
+            });
+        },
+        "取消": function() {
+            $('#ad_language_form')[0].reset();
+            dialog.dialog( "close" );
+        }
+        }
+        });
+        dialog.dialog( "open" );
+    });
+    });
+
+    function deleteCron(obj,id){
+		var txt=  "是否确认删除？";
+		var btnObj = $(obj);
+		btnObj.attr('disabled',true);
+		var option = {
+			title: "删除区域配置",
+			btn: parseInt("0011",2),
+			onOk: function(){
+				$.ajax({
+					  type: 'DELETE',
+					  url: '/language_config_mod/'+id+'/',
+				      success:function(response){
+					      location.reload();
+				      },
+		              error:function(response){
+		            	  btnObj.removeAttr('disabled');
+		            	  window.wxc.xcConfirm("删除失败！", window.wxc.xcConfirm.typeEnum.error);
+		              }
+					});
+			},
+			onCancel:function(){
+			},
+			onClose:function(){
+			}
+		}
+		window.wxc.xcConfirm(txt, "custom", option);
+	};
+
+    function Select2we(){
+        $("#countrys").select2();
+    }
+
+    $(document).ready(function() {
+        LoadSelect2Script(Select2we);
+        WinMove();
+    });
+
+</script>

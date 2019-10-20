@@ -1,0 +1,104 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">报表</a></li>
+            <li><a href="#">量级构成</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>量级构成</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="well">
+            <form role="form" method="post" id="addCrontab" class="main form-horizontal" enctype="multipart/form-data" >{% csrf_token %}
+                <div class="clearfix form-actions form-search">
+                    <div style="width:38px; height:auto; float:left; display:inline"><label> 项目 </label></div>
+                    <div style="width:240px; height:auto; float:left; display:inline">
+                        <select name="project" id="project" class="selectpicker" data-live-search="true" data-selected-text-format="count > 3" data-size="5" style="height:26px" >
+                            {% for project in projectValues %}
+                                <option value={{ project }} >{{ project }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <label >平台 <select name="platform" id="platform" style="height:26px">
+                        <option selected="selected" value="">全平台</option>
+                        <option value="IOS" >IOS</option>
+                        <option value="Android" >Android</option>
+                    </select></label>
+                    <label></label>
+                    <label>时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                    <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+
+                    <label><button type="button"  class="btn btn-primary" onclick="report_quantity_check()" >查找</button>
+                     </label>
+
+                    </div>
+                </form>
+                </div>
+
+                <div class="tab-content" id="content_id">
+                 <div class="tab-pane fade in active" id="game_act">
+                  <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                      <div class="tab-content">
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+      </div>
+
+           </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd',
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose:true
+    });
+
+    function report_quantity_check(){
+         $.post("/report_quantity_check/",{
+             start_time:$('#start_time').val(),
+             end_time:$('#end_time').val(),
+             project:$('#project').val(),
+             platform:$('#platform').val()
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({
+
+        });
+    });
+</script>

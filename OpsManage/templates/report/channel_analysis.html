@@ -1,0 +1,396 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">分析</a></li>
+            <li><a href="#">渠道分析</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>渠道分析</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="well">
+{#                    <div style="width:32px; height:auto; float:left; display:inline"><label> 版本 </label></div>#}
+{#                        <div style="width:200px; height:auto; float:left; display:inline"> <select id="ch_perms" multiple name="channal_perms" onchange="select_channel_show()">#}
+{#                             {% for ul in gameversion_list %}#}
+{#                                <option value="{{ul.name}}">{{ul.name}}</option>#}
+{#                             {% endfor %}#}
+{#                        </select>#}
+{#                    </div>#}
+                     <div style="width:32px; height:auto; float:left; display:inline"><label> 项目</label></div>
+                    <div style="width:200px; height:auto; float:left; display:inline">
+                        <select id="game_perms"  name="game_perms"  required>
+                            {% for ul in game_list %}
+                             <option value="{{ul.name}}" {% if ul.name == 'roh' %}selected="selected"{% endif %}>{{ul.name}}</option>
+                         {% endfor %}
+                        </select>
+                    </div>
+
+
+                   <div style="width:32px; height:auto; float:left; display:inline"><label> 渠道</label></div>
+                    <div style="width:200px; height:auto; float:left; display:inline">
+                        <select id="ch_perms" multiple="multiple"  name="channal_perms" >
+                         {% for ul in ad_channel_list %}
+                             <option value="{{ul.channel}}">{{ul.channel}}</option>
+                         {% endfor %}
+                        </select>
+                    </div>
+
+                    <div style="width:32px; height:auto; float:left; display:inline"><label> 国家 </label></div>
+                     <div style="width:200px; height:auto; float:left; display:inline">
+                        <select id="co_perms" multiple="multiple" name="country_perms">
+                            {% for ul in area_list %}
+                                <option value="{{ul}}">{{ul}}</option>
+                             {% endfor %}
+                        </select>
+                     </div>
+
+                    <div style="width:32px; height:auto; float:left; display:inline"><label> 版本 </label></div>
+                     <div style="width:200px; height:auto; float:left; display:inline">
+                        <select id="gv_perms" multiple="multiple" name="gameversion_perms">
+                            {% for ul in gameversion_list %}
+                                <option value="{{ul}}">{{ul}}</option>
+                             {% endfor %}
+                        </select>
+                     </div>
+
+                    <div style="width:32px; height:auto; float:left; display:inline"><label> 平台 </label></div>
+                     <div style="width:200px; height:auto; float:left; display:inline">
+                        <select id="pl_perms" multiple="multiple" name="platform_perms">
+                            <option value="ios" >IOS</option>
+                            <option value="android" >Android</option>
+                        </select>
+                     </div>
+
+{#                    <label >平台 <select name="platform" id="platform" style="height:26px">#}
+{#                        <option selected="selected" value="">全部</option>#}
+{#                        <option value="ios" >IOS</option>#}
+{#                        <option value="android" >Android</option>#}
+{#                    </select></label>#}
+                    <label >CPI <input type="text" id="cpi_id"></label>
+
+                     <label></label>
+                    <br></br>
+                    <label>时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                    <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                    <label>
+
+{#                    <div class="selectdime">#}
+                        <label >维度一</label>
+                        <select id="condition_1" name="condition_1"  style="height:26px">
+{#                            <option selected="selected" value="none" >选择维度展示</option>#}
+                            <option value="channel">按渠道展示</option>
+{#                            <option value="time" >      按时间展示</option>#}
+{#                            <option value="country" >按国家展示</option>#}
+{#                            <option value="language" >按版本展示</option>#}
+{#                            <option value="platform" >按平台展示</option>#}
+                            </select>
+                        <label >维度二</label>
+                        <select id="condition_2" name="condition_2" style="height:26px">
+                             <option selected="selected" value="none" >选择维度展示</option>
+{#                            <option value="channel">按渠道展示</option>#}
+                            <option value="time" >      按时间展示</option>
+                            <option value="country" >按国家展示</option>
+                            <option value="language" >按版本展示</option>
+                            <option value="platform" >按平台展示</option>
+                        </select>
+                         <label >维度三</label>
+                        <select id="condition_3" name="condition_3" style="height:26px">
+                            <option selected="selected" value="none" >选择维度展示</option>
+{#                            <option value="channel">按渠道展示</option>#}
+                            <option value="time" >      按时间展示</option>
+                            <option value="country" >按国家展示</option>
+                            <option value="language" >按版本展示</option>
+                            <option value="platform" >按平台展示</option>
+                        </select>
+                         <label >维度四</label>
+                        <select id="condition_4" name="condition_4" style="height:26px">
+                             <option selected="selected" value="none" >选择维度展示</option>
+{#                            <option value="channel">按渠道展示</option>#}
+                            <option value="time" >      按时间展示</option>
+                            <option value="country" >按国家展示</option>
+                            <option value="language" >按版本展示</option>
+                            <option value="platform" >按平台展示</option>
+                        </select>
+                         <label >维度五</label>
+                        <select id="condition_5" name="condition_5" style="height:26px">
+                            <option selected="selected" value="none" >选择维度展示</option>
+{#                            <option value="channel">按渠道展示</option>#}
+                            <option value="time" >      按时间展示</option>
+                            <option value="country" >按国家展示</option>
+                            <option value="language" >按版本展示</option>
+                            <option value="platform" >按平台展示</option>
+                        </select>
+{#                      </div>#}
+{#                         <div class="selectdime">#}
+{#                        <select id="time_show" name="time_show"  style="height:26px">#}
+{#                            <option selected="selected" value="time" >是否按时间展示</option>#}
+{#                            <option value="1" >按时间展示，细分级别1</option>#}
+{#                            <option value="2" >按时间展示，细分级别2</option>#}
+{#                            </select>#}
+{#                            <select id="country_show" name="country_show" style="height:26px">#}
+{#                             <option selected="selected" value="country" >是否按国家展示</option>#}
+{#                            <option value="1" >按国家展示，细分级别1</option>#}
+{#                            <option value="2" >按国家展示，细分级别2</option>#}
+{#                        </select>#}
+{#                      </div>#}
+                      </label>
+{#                    <label ><input type="checkbox" id="selectdime" name="selectdime" />是否按天展示 </label>#}
+
+
+                    <br></br>
+                    <label>
+                    <div id="pay_status" style="display: none">
+                    <label>付费时间范围 <input  type="text"  id="f_start_time" name="f_start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                    <label><i class="fa fa-exchange"></i> <input  type="text"  id="f_end_time" name="f_end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01" AUTOCOMPLETE="off"></label>
+                    </div>
+                    </label>
+
+                    <label ><input type="checkbox" id="checkbox_id" name="pay_status" onclick="set_pay_status(this)" id="day_pay_status" />展示付费金额 </label>
+{#                    <label ><input type="checkbox" id="checkbox_id" name="show_subchan" onclick="set_sub_channel(this)" id="show_subchan" />是否展示子渠道名 </label>#}
+
+
+                    <label><button type="button"  class="btn btn-primary" onclick="channel_analysis_check()" ><i class="fa fa-search"></i>查找</button>
+                    </label>
+                </div>
+
+                <div class="tab-content" id="content_id">
+                 <div class="tab-pane fade in active" id="game_act">
+                  <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                        <div class="panel-body">
+
+                      <div class="tab-content">
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div></div>
+
+ <div class="tab-pane fade" id="web_act">
+
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-gear"></i>IOS
+                </div>
+                <div class="panel-body">
+                <div class="well">
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+     </div>
+    </div>
+    </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+
+<script type="text/javascript">
+
+{#     $(document).ready(function() {#}
+{#        $("#country_show").hide();#}
+{#    });#}
+
+{#    function select_country_show() {#}
+{#        $("#country_show").show();#}
+{#    }#}
+
+    function select_subcha_show() {
+        $("#country_show").show();
+    }
+
+    $('.selectdime select').change(function () {
+        var strchecked = new Array();
+        $('.selectdime select').each(function () {
+            strchecked[$(this).index()] = $(this).val();
+        });
+        $(this).siblings().find('option').each(function () {
+            if (($(this).attr('value') == strchecked[0] || $(this).attr('value') == strchecked[1] || $(this).attr('value') == strchecked[2]) && ($(this).attr('value') != $(this).parents('select').val())) {
+                $(this).attr("disabled", true);
+            } else {
+                $(this).attr("disabled", false);
+            }
+        });
+        });
+
+    $(document).ready(function() {
+        $('#email_list_table').DataTable({
+            responsive: true
+        });
+    });
+
+    $(document).ready(function() {
+        $('#web_activitt_table').DataTable({
+            responsive: true
+        });
+    });
+
+
+    function set_pay_status(obj){
+    if($(obj).is(":checked")){
+        $('#pay_status').show();
+    }
+    else{
+        $('#pay_status').hide();
+    }
+    }
+
+
+    function game_activity_lookup() {
+        window.event.cancelBubble = true;
+        art.dialog({title: '信息',
+            lock: true,
+            content:'<iframe src=/game_activity_lookup/'+' width="800"  height="600" frameborder="0" allowtransparency="true"  marginheight="0" marginwidth="0" ></iframe>'});
+    }
+
+    function web_activity_lookup() {
+        window.event.cancelBubble = true;
+        art.dialog({title: '信息',
+            lock: true,
+            content:'<iframe src=/web_activity_lookup/'+' width="800"  height="600" frameborder="0" allowtransparency="true"  marginheight="0" marginwidth="0" ></iframe>'});
+    }
+
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd',
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose:true
+    });
+
+    function channel_analysis_check(){
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        if (start_time == '' || end_time == '') {
+                alert('选择时间范围');
+                return;
+            }
+         $.post("/channel_analysis_check/",{
+             channels: $('#ch_perms').selectpicker('val'),
+{#             subchannels: $('#subch_perms').selectpicker('val'),#}
+{#             sub1channels: $('#sub1ch_perms').selectpicker('val'),#}
+{#             sub2channels: $('#sub2ch_perms').selectpicker('val'),#}
+             countrys: $('#co_perms').selectpicker('val'),
+             gameverisions: $('#gv_perms').selectpicker('val'),
+             platforms: $('#pl_perms').selectpicker('val'),
+             start_time:$('#start_time').val(),
+             end_time:$('#end_time').val(),
+             country_show:$('#country_show').val(),
+             channel_show:$('#channel_show').val(),
+             time_show:$('#time_show').val(),
+             condition_5:$('#condition_5').val(),
+             condition_4:$('#condition_4').val(),
+             condition_3:$('#condition_3').val(),
+             condition_2:$('#condition_2').val(),
+             condition_1:$('#condition_1').val(),
+
+             game_perms:$('#game_perms').val(),
+             language:$('#language').val(),
+             platform:$('#platform').val(),
+             f_start_time:$('#f_start_time').val(),
+             f_end_time:$('#f_end_time').val(),
+             checkbox:$('#checkbox_id').is(":checked")
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    function Select2Test(){
+        $("#co_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2Test);
+        WinMove();
+    });
+
+    function Select2Gv(){
+        $("#gv_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2Gv);
+        WinMove();
+    });
+
+    function Select2Pl(){
+        $("#pl_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2Pl);
+        WinMove();
+    });
+
+     function Select2subch(){
+        $("#subch_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2subch);
+        WinMove();
+    });
+
+      function Select2sub1ch(){
+        $("#sub1ch_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2sub1ch);
+        WinMove();
+    });
+
+       function Select2sub2ch(){
+        $("#sub2ch_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2sub2ch);
+        WinMove();
+    });
+
+     function Select2ch(){
+        $("#ch_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2ch);
+            WinMove();
+    });
+
+      function Select2game(){
+        $("#game_perms").select2();
+    }
+    $(document).ready(function() {
+        // Load script of Select2 and run this
+        LoadSelect2Script(Select2game);
+            WinMove();
+    });
+
+</script>

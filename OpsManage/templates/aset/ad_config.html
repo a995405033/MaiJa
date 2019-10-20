@@ -1,0 +1,360 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">广告配置</a></li>
+            <li><a href="#">广告花费录入</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>广告花费录入</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                  <div class="well">
+                      <form role="form" method="post" id="addCrontab" class="main form-horizontal" enctype="multipart/form-data" >{% csrf_token %}
+                            <div class="clearfix form-actions form-search">
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 项目 </label></div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="project" id="project" class="selectpicker" multiple data-live-search="false" data-actions-box="true" style="height:26px">
+                                        {% for project in projectValues %}
+                                    <option value="{{ project }}" >{{ project }}</option>
+                                {% endfor %}
+                                    </select>
+                                </div>
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 平台 </label></div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="platform" id="platform" class="selectpicker" multiple data-live-search="false" data-actions-box="true" style="height:26px">
+                                        <option value="IOS" >IOS</option>
+                                        <option value="Android" >Android</option>
+                                    </select>
+                                </div>
+                                <div style="width:32px; height:auto; float:left; display:inline"><label> 渠道 </label></div>
+                                <div style="width:260px; height:auto; float:left; display:inline">
+                                    <select name="channal_perms" id="ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" onchange="selectChannel()" style="height:26px">
+                                        {% for channel in ad_channel_list %}
+                                            <option value="{{ channel }}" >{{ channel }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 国家 </label></div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="country" id="country" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">
+                                        {% for country in country_list %}
+                                            <option value={{ country }} >{{ country }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div style="width:38px; height:auto; float:left; display:inline"><label> 语言 </label></div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="language" id="language" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+                                        {% for language in language_list %}
+                                            <option value={{ language }} >{{ language }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <label></label>
+                                <label>时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                                <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                                <label><button type="button"  id="ad_check" class="btn btn-primary" onclick="ad_config_check()" >查询</button></label>
+                                <label><button type="button"  class="btn btn-primary" id="create_ad" >添加</button>
+                                </label>
+                            </div>
+                      </form>
+                      <form enctype="multipart/form-data" action="/ad_config_upload/" method="post">{% csrf_token %}
+                          <label title="文件内容顺序：日期（格式：xxxx-xx-xx ， 例如 2019-06-06）, 项目，平台， 语言， 渠道， 广告花费">文件</label>
+                          <label><input type="submit" value="导入"/></label>
+                          <label> <input type="file" name="ad_file" /></label>
+                      </form>
+                  </div>
+                </div>
+
+            <div class="tab-content" id="content_id">
+             <div class="tab-pane fade in active" id="game_act">
+	          <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+
+                      <div class="tab-content">
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        </div>
+
+           </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+</div>
+
+<div id="dialog-form">
+  <p class="validateTips"></p>
+
+  <form id="ad_cost_form">
+    <fieldset style="padding:0; border:0; margin-top:25px; margin-left:20px;">
+      <label for="project_a" style="display: block">项目</label>
+        <select name="project_a" id="project_a" style="display: block;margin-bottom:12px; width:95%; padding: .4em;" >
+            <option value="sgame" >sgame</option>
+        </select>
+      <label for="date_a" style="display: block">开始时间</label>
+      <input style="display: block; margin-bottom:12px; width:95%; padding: .4em;" type="text" name="date_a" id="date_a" value="" class="text ui-widget-content ui-corner-all form_datetime">
+        <label for="date_b" style="display: block">结束时间</label>
+        <input style="display: block; margin-bottom:12px; width:95%; padding: .4em;" type="text" name="date_b" id="date_b" value="" class="text ui-widget-content ui-corner-all form_datetime">
+      <label for="platform_a" style="display: block">平台</label>
+        <select name="platform_a" id="platform_a" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+            <option value="Android" >Android</option>
+            <option value="IOS" >IOS</option>
+        </select>
+      <label for="country_a" style="display: block">国家</label>
+        <select name="country_a" id="country_a" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+            {% for country in country_list %}
+                <option value={{ country }} >{{ country }}</option>
+            {% endfor %}
+        </select>
+      <label for="language_a" style="display: block">语言</label>
+        <select name="language_a" id="language_a" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+            {% for language in language_list %}
+                <option value={{ language }} >{{ language }}</option>
+            {% endfor %}
+        </select>
+      <label for="channel_a" style="display: block">渠道</label>
+        <select name="channel_a" id="channel_a" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px;" >
+            {% for channel in ad_channel_list %}
+                <option value="{{ channel }}" >{{ channel }}</option>
+            {% endfor %}
+        </select>
+      <label style="display: block" for="email">CPI</label>
+      <input style="display: block;margin-bottom:12px; width:95%; padding: .4em;" type="numberDecimal" name="cpi_a" id="cpi_a" value="" class="text ui-widget-content ui-corner-all" step="0.01" onkeyup="clearNoNum(this)" >
+      <label style="display: block" for="password">广告花费</label>
+      <input style="display: block;margin-bottom:12px; width:95%; padding: .4em;" type="numberDecimal" name="ad_cost_a" id="ad_cost_a" value="" class="text ui-widget-content ui-corner-all" step="0.01" onkeyup="clearNoNum(this)" >
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#country_show").hide();
+        $("#channel_show").hide();
+    });
+
+    $(document).ready(function() {
+        $('#email_list_table').DataTable({
+            responsive: true
+        });
+    });
+
+    $(document).ready(function() {
+        $('#web_activitt_table').DataTable({
+            responsive: true
+        });
+    });
+
+    function select_channel_show() {
+        $("#channel_show").show();
+    }
+
+    function select_country_show() {
+        $("#country_show").show();
+    }
+
+    function select_change_country() {
+        var checkValue=$("#country_show").find("option:selected").val();
+        $("select[id='channel_show'] option").each(function(){
+            $(this).attr("disabled",false);
+        });
+        $("#channel_show option[value='"+checkValue+"']").attr("disabled",true);
+    }
+
+    function select_change_channel() {
+        var checkValue=$("#channel_show").find("option:selected").val();
+        $("select[id='country_show'] option").each(function(){
+            $(this).attr("disabled",false);
+        });
+        $("#country_show option[value='"+checkValue+"']").attr("disabled",true);
+    }
+
+    function set_pay_status(obj){
+    if($(obj).is(":checked")){
+        $('#pay_status').show();
+    }
+    else{
+        $('#pay_status').hide();
+    }
+    }
+
+    function game_activity_lookup() {
+        window.event.cancelBubble = true;
+        art.dialog({title: '信息',
+            lock: true,
+            content:'<iframe src=/game_activity_lookup/'+' width="800"  height="600" frameborder="0" allowtransparency="true"  marginheight="0" marginwidth="0" ></iframe>'});
+    }
+
+    function web_activity_lookup() {
+        window.event.cancelBubble = true;
+        art.dialog({title: '信息',
+            lock: true,
+            content:'<iframe src=/web_activity_lookup/'+' width="800"  height="600" frameborder="0" allowtransparency="true"  marginheight="0" marginwidth="0" ></iframe>'});
+    }
+
+    $(".form_datetime").datetimepicker({
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose:true
+    });
+
+    function ad_config_check(){
+         $.post("/ad_config_check/",{
+             channels: $('#ch_perms').selectpicker('val'),
+             countrys: $('#country').selectpicker('val'),
+             languages: $('#language').selectpicker('val'),
+             start_time:$('#start_time').val(),
+             end_time:$('#end_time').val(),
+             platform:$('#platform').val(),
+             project:$('#project').val()
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    $(document).ready( function() {
+        var dialog = $( "#dialog-form" ).dialog({
+        title: '广告花费录入',
+        autoOpen: false,
+        height: 600,
+        width: 450,
+        modal: true,
+        buttons: {
+        "添加": function() {
+            $.ajax({
+                type: "POST",
+                url:"/ad_cost_add/",
+                data:$('#ad_cost_form').serialize(),
+                async: false,
+                error: function(request) {
+                    $('#ad_cost_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加失败！", window.wxc.xcConfirm.typeEnum.error);
+                },
+                success: function(data) {
+                    $('#ad_cost_form')[0].reset();
+                    dialog.dialog( "close" );
+                    window.wxc.xcConfirm("添加成功！", window.wxc.xcConfirm.typeEnum.success);
+                }
+            });
+        },
+        "取消": function() {
+          dialog.dialog( "close" );
+        }
+        },
+      open: function (event, ui) {
+          $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+        }
+        });
+
+    $( "#create_ad" ).button().on( "click", function() {
+        var dialog = $( "#dialog-form" ).dialog({
+        title: '广告花费录入',
+        autoOpen: false,
+        height: 750,
+        width: 650,
+        modal: true,
+        buttons: {
+        "添加": function() {
+            $.ajax({
+                type: "POST",
+                url:"/ad_cost_add/",
+                data : {
+                    project_a:$("#project_a").val(),
+                    date_a:$("#date_a").val(),
+                    date_b:$("#date_b").val(),
+                    platform_a: $('#platform_a').selectpicker('val'),
+                    country_a: $('#country_a').selectpicker('val'),
+                    language_a: $('#language_a').selectpicker('val'),
+                    channel_a: $('#channel_a').selectpicker('val'),
+                    cpi_a:$("#cpi_a").val(),
+                    ad_cost_a:$("#ad_cost_a").val()
+                },
+                async: false,
+                error: function(request) {
+                    $('#ad_cost_form')[0].reset();
+                    dialog.dialog( "close" );
+                    $('#platform_a').selectpicker('refresh');
+                    $('#country_a').selectpicker('refresh');
+                    $('#language_a').selectpicker('refresh');
+                    $('#channel_a').selectpicker('refresh');
+                    window.wxc.xcConfirm("添加失败！", window.wxc.xcConfirm.typeEnum.error);
+                },
+                success: function(data) {
+                    $('#ad_cost_form')[0].reset();
+                    dialog.dialog( "close" );
+                    $('#platform_a').selectpicker('refresh');
+                    $('#country_a').selectpicker('refresh');
+                    $('#language_a').selectpicker('refresh');
+                    $('#channel_a').selectpicker('refresh');
+                    window.wxc.xcConfirm("添加成功！", window.wxc.xcConfirm.typeEnum.success);
+                }
+            });
+        },
+        "取消": function() {
+          dialog.dialog( "close" );
+        }
+        },
+      open: function (event, ui) {
+          $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+        }
+        });
+      dialog.dialog( "open" );
+    });
+    });
+
+
+    function clearNoNum(obj){
+        obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+    }
+
+    $("#channel_a").selectpicker({
+        width : "95%"
+    });
+    $("#language_a").selectpicker({
+        width : "95%"
+    });
+    $("#country_a").selectpicker({
+        width : "95%"
+    });
+    $("#platform_a").selectpicker({
+        width : "95%"
+    });
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({
+
+        });
+    });
+  </script>

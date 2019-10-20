@@ -1,0 +1,192 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">用户中心</a></li>
+            <li><a href="#">用户配置</a></li>
+            <li><a href="#">用户资料配置</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>用户资料配置</h3>
+	</div>
+</div>
+<div id="page-wrapper">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                   用户权限管理
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                        <div id="asset_net_chioce" class="col-lg-6">
+                        <form role="form" method="post" id="addHost" class="main form-horizontal" >{% csrf_token %}
+
+                            <div class="form-group" >
+                                 <label class="col-sm-4 control-label"> 用户名</label>
+                                 <div class="col-sm-5">
+                                    <input id="username" class="form-control" type="text" value="{{user_info.username}}" placeholder="用户名" name="username" />
+                                 </div>
+                            </div>
+
+                            <div class="form-group" >
+                                 <label class="col-sm-4 control-label"> 姓名</label>
+                                 <div class="col-sm-5">
+                                    <input id="name" class="form-control" type="text" value="{{user_info.first_name}}" placeholder="姓名" name="name" />
+                                 </div>
+                            </div>
+
+                            <div class="form-group" >
+                                 <label class="col-sm-4 control-label"> 邮箱</label>
+                                 <div class="col-sm-5">
+                                    <input id="email" class="form-control" type="text" id="form-field-3" value="{{user_info.email}}" placeholder="email" name="email" />
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                {% if user_info.is_superuser %}
+                                    <label class="col-sm-4 control-label"> 管理员</label>
+                                {% else %}
+                                    <label class="col-sm-4 control-label"> 管理员</label>
+                                {% endif %}
+                                 <div class="col-sm-5">
+                                    <select id="is_superuser" class="form-control"  name="is_superuser">
+                                        {% if user_info.is_superuser == 1 %}
+                                            <option selected="selected" value="1">是</option>
+                                            <option value="0">否</option>
+                                        {% else %}
+                                            <option  value="1">是</option>
+                                            <option selected="selected" value="0">否</option>
+                                        {% endif %}
+                                    </select>
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                 <label class="col-sm-4 control-label"> 用户分组</label>
+                                 <div class="col-sm-5">
+                                    <select id="groups" multiple name="groups">
+                                        {% for ds in groupList %}
+                                            {% if ds.status == 1  %}
+                                            <option selected="selected" value="{{ds.id}}">{{ds.name}}</option>
+                                            {% else %}
+                                            <option value="{{ds.id}}">{{ds.name}}</option>
+                                            {% endif %}
+
+                                        {% endfor %}
+                                    </select>
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                 <label class="col-sm-4 control-label">分配权限</label>
+                                 <div class="col-sm-5">
+                                    <select id="perms" multiple name="perms">
+                                        {% for ds in permList %}
+                                            {% if ds.status == 1 %}
+                                                <option selected="selected" value="{{ds.id}}">{{ds.name}}</option>
+                                                {% else %}
+                                                <option value="{{ds.id}}">{{ds.name}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                 <label class="col-sm-4 control-label"> 激活状态</label>
+                                 <div class="col-sm-5">
+                                    <select id="is_active" class="form-control" name="is_active">
+                                        {% if user_info.is_active == 0 %}
+                                            <option selected="selected" value="0">未激活</option>
+                                            <option value="1">已激活</option>
+                                        {% else %}
+                                            <option  value="0">未激活</option>
+                                            <option selected="selected" value="1">已激活</option>
+                                        {% endif %}
+                                    </select>
+                                 </div>
+                            </div>
+
+                            <div class="hr hr32 hr-dotted"></div>
+                            <div class="form-group">
+                                <div class="col-md-offset-5 col-md-9">
+                                    <button class="btn btn-default" type="button" onclick="userInfo({{ user_info.id }})">
+                                        <i class="fa fa-check"></i>
+                                                        提交
+                                    </button>
+                                                   &nbsp; &nbsp; &nbsp;
+                                    <button class="btn btn-default" type="reset">
+                                        <i class="fa fa-undo"></i>
+                                                        撤销
+                                    </button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+ $(document).ready(function() {
+    $('.selectpicker').selectpicker({
+        'selectedText': 'cat'
+    });
+});
+
+ function Select2Test(){
+	$("#groups").select2();
+	$("#perms").select2();
+}
+$(document).ready(function() {
+	// Load script of Select2 and run this
+	LoadSelect2Script(Select2Test);
+	WinMove();
+});
+
+{% if errorInfo %}
+	window.wxc.xcConfirm("{{errorInfo}}", window.wxc.xcConfirm.typeEnum.error);
+{% endif %}
+
+function userInfo(uid) {
+    var username = document.getElementById('username').value;
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var is_superuser = document.getElementById('is_superuser').value;
+    var groups = $('#groups').selectpicker('val');
+    var perms = $('#perms').selectpicker('val');
+    var is_active = document.getElementById('is_active').value;
+     $.ajax({
+           url: 'user/'+uid+'/',
+           data : {username:username,name:name,email:email,is_superuser:is_superuser,groups:groups,perms:perms,is_active:is_active},
+           type: "POST",
+           dataType: "json",
+           beforeSend: function (xhr, settings) {
+               var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
+               xhr.setRequestHeader("X-CSRFToken", csrftoken);
+           },
+           success:function(response){
+                location.reload();
+            },
+           error:function(response){
+                location.reload();
+            }
+       });
+}
+
+</script>

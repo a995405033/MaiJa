@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form id="adb_cost_form" action="/ad_config_edit/" method="POST" >{% csrf_token %}
+    <fieldset style="padding:0; border:0; margin-top:25px; margin-left:20px;">
+      <input style="display: none; margin-bottom:12px; width:90%; padding: .4em;" type="text" name="ad_id" id="ad_id" value="{{ adconf.id }}" class="text ui-widget-content ui-corner-all">
+      <label for="date_a" style="display: block">时间</label>
+      <input style="display: block; margin-bottom:12px; width:90%; padding: .4em;" type="text" name="date_b" id="date_b" value="{{ adconf.date }}" class="text ui-widget-content ui-corner-all">
+      <label for="project_a" style="display: block">项目</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="project_b" id="project_b" value="{{ adconf.project }}" class="text ui-widget-content ui-corner-all">
+      <label for="platform_a" style="display: block">平台</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="platform_b" id="platform_b" value="{{ adconf.platform }}" class="text ui-widget-content ui-corner-all">
+      <label for="country_a" style="display: block">国家</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="country_b" id="country_b" value="{{ adconf.country }}" class="text ui-widget-content ui-corner-all">
+      <label for="language_a" style="display: block">语言</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="language_b" id="language_b" value="{{ adconf.language }}" class="text ui-widget-content ui-corner-all">
+      <label for="channel_b" style="display: block">渠道</label>
+        <select name="channel_b" id="channel_b" style="display: block;margin-bottom:12px; width:93%; padding: .4em;" >
+            <option value="{{ adconf.channel }}" >{{ adconf.channel }}</option>
+            <option value="自然用户" >自然用户</option>
+            <option value="非激励性" >非激励性</option>
+        </select>
+      <label style="display: block" for="email">CPI</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="cpi_b" id="cpi_b" value="{{ adconf.cpi }}" class="text ui-widget-content ui-corner-all">
+      <label style="display: block" for="password">广告花费</label>
+      <input style="display: block;margin-bottom:12px; width:90%; padding: .4em;" type="text" name="ad_cost_b" id="ad_cost_b" value="{{ adconf.ad_cost }}" class="text ui-widget-content ui-corner-all">
+      <br>
+      <input type="submit" value="修改" style="height: 30px; margin-right: 25px"/>
+    </fieldset>
+  </form>
+</body>
+</html>
+

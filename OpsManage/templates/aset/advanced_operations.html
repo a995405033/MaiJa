@@ -1,0 +1,282 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+    <div class="col-xs-10 col-sm-2">
+        <h3>数据操作</h3>
+    </div>
+</div>
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="well">
+                        <label>日报数据删除</label>
+                        <label>
+                            <input type="text" id="rdd_start_time" name="rdd_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rdd_end_time" name="rdd_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="report_day_delete()"><i
+                                    class="fa fa-search"></i>删除
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>日报数据重新生成(只需点击一次,慢是正常的)</label>
+                        <label>
+                            <input type="text" id="rdc_start_time" name="rdc_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rdc_end_time" name="rdc_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="report_day_create()"><i
+                                    class="fa fa-search"></i>生成
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>充值用户的日留存</label>
+                        <label>
+                            <input type="text" id="rrc_start_time" name="rrc_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rrc_end_time" name="rr
+                            c_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="recharge_remain_day_create()"><i
+                                    class="fa fa-search"></i>生成(只需点击一次,慢是正常的)
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="recharge_remain_day_clear()"><i
+                                    class="fa fa-search"></i>清表,清表,清表
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>周报数据删除</label>
+                        <label>
+                            <input type="text" id="rwd_start_time" name="rwd_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rwd_end_time" name="rwd_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="report_week_delete()"><i
+                                    class="fa fa-search"></i>删除
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>周报数据重新生成(只需点击一次,慢是正常的)</label>
+                        <label>
+                            <input type="text" id="rwc_start_time" name="rwc_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rwc_end_time" name="rwc_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="report_week_create()"><i
+                                    class="fa fa-search"></i>生成
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>月报数据删除</label>
+                        <label>
+                            <input type="text" id="rmd_time" name="rmd_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm" title="例如2017-01">
+                            <button type="button" class="btn btn-primary" onclick="report_month_delete()"><i
+                                    class="fa fa-search"></i>删除
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>月报数据重新生成(只需点击一次,这个会灰常慢,要生成4月的月报,要等到5月2日开始)</label>
+                        <label>
+                            <input type="text" id="rmc_time" name="rmc_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm" title="例如2017-01">
+                            <button type="button" class="btn btn-primary" onclick="report_month_create()"><i
+                                    class="fa fa-search"></i>生成
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>日留存数据删除</label>
+                        <label>
+                            <input type="text" id="rrd_start_time" name="rrd_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="rrd_end_time" name="rrd_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="remain_day_delete()"><i
+                                    class="fa fa-search"></i>删除
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>日留存数据重新生成(只需点击一次,慢是正常的)</label>
+                        <label>
+                            <input type="text" id="remainc_start_time" name="remainc_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="remainc_end_time" name="remainc_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="remain_day_create()"><i
+                                    class="fa fa-search"></i>生成
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="well">
+                        <label>月留存数据删除</label>
+                        <label>
+                            <input type="text" id="reMonth_del_start_time" name="reMonth_del_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="reMonth_del_end_time" name="reMonth_del_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="remain_month_delete()"><i
+                                    class="fa fa-search"></i>删除
+                            </button>
+                        </label>
+                    </div>
+                    <div class="well">
+                        <label>月留存数据重新生成(只需点击一次,慢是正常的)</label>
+                        <label>
+                            <input type="text" id="reMonth_cre_start_time" name="reMonth_cre_start_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" id="reMonth_cre_end_time" name="reMonth_cre_end_time" placeholder=""
+                                   class="form_datetime" data-date-format="yyyy-mm-dd" title="例如2017-01-01">
+                            <button type="button" class="btn btn-primary" onclick="remain_month_create()"><i
+                                    class="fa fa-search"></i>生成
+                            </button>
+                        </label>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function report_day_delete() {
+        $.post("/report_day_delete/", {
+            start_time: $('#rdd_start_time').val(),
+            end_time: $('#rdd_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_day_create() {
+        $.post("/report_day_create/", {
+            start_time: $('#rdc_start_time').val(),
+            end_time: $('#rdc_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function recharge_remain_day_create() {
+        $.post("/recharge_remain_day_create/", {
+            start_time: $('#rrc_start_time').val(),
+            end_time: $('#rrc_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function recharge_remain_day_clear() {
+        $.post("/recharge_remain_day_clear/", {
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_week_delete() {
+        $.post("/report_week_delete/", {
+            start_time: $('#rwd_start_time').val(),
+            end_time: $('#rwd_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_week_create() {
+        $.post("/report_week_create/", {
+            start_time: $('#rwc_start_time').val(),
+            end_time: $('#rwc_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_month_delete() {
+        $.post("/report_month_delete/", {
+            start_time: $('#rmd_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function report_month_create() {
+        $.post("/report_month_create/", {
+            start_time: $('#rmc_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function remain_day_delete() {
+        $.post("/remain_day_delete/", {
+            start_time: $('#rrd_start_time').val(),
+            end_time: $('#rrd_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function remain_day_create() {
+        $.post("/remain_day_create/", {
+            start_time: $('#remainc_start_time').val(),
+            end_time: $('#remainc_end_time').val()
+
+        }, function (data) {
+            $("#content_id").html(data);
+        });
+    }
+
+    function remain_month_delete() {
+        $.post("/remain_month_delete/", {
+            start_time: $('#reMonth_del_start_time').val(),
+            end_time: $('#reMonth_del_end_time').val()
+        });
+    }
+
+    function remain_month_create() {
+        $.post("/remain_month_create/", {
+            start_time: $('#reMonth_cre_start_time').val(),
+            end_time: $('#reMonth_cre_end_time').val()
+        });
+    }
+</script>

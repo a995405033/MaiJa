@@ -1,0 +1,375 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">留存</a></li>
+            <li><a href="#">各维度留存</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>各维度留存</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                  <div class="well">
+                    <form role="form" method="post" id="addCrontab" class="main form-horizontal" enctype="multipart/form-data" >{% csrf_token %}
+                        <div class="clearfix form-actions form-search">
+                        <div style="width:38px; height:auto; float:left; display:inline"><label> 项目 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                                <select name="items" id="items" class="selectpicker" data-live-search="false" data-actions-box="true" style="height:26px">
+                                   {% for GameName in GameNameValues %}
+                                        <option value={{ GameName }} {% if GameName == 'roh' %}selected="selected"{% endif %}>{{ GameName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div style="width:38px; height:auto; float:left; display:inline"><label> 语言 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                                <select name="language" id="language" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px" >
+                                    {% for language in languageValues %}
+                                        <option value={{ language }} >{{ language }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div style="width:38px; height:auto; float:left; display:inline"><label> 平台 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                                <select name="platform" id="platform" class="selectpicker" multiple data-live-search="false" data-actions-box="true" style="height:26px">
+                                    <option value="IOS" >IOS</option>
+                                    <option value="Android" >Android</option>
+                                </select>
+                            </div>
+                        <div style="width:38px; height:auto; float:left; display:inline"><label> 国家 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                                <select name="country" id="country" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">
+                                    {% for country in countryValues %}
+                                        <option value={{ country }} >{{ country }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <br><br>
+                            <div style="width:32px; height:auto; float:left; display:inline"><label> 渠道 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                                <select name="channal_perms" id="ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" onchange="selectChannel()" style="height:26px">
+                                    {% for channel in channelValues %}
+                                        <option value="{{ channel }}" >{{ channel }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div style="width:70px; height:auto; float:left; display:inline"><label> 1级子渠道 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                                <input type="text" id="sub1_ch_perms" name="sub1_channal_perms">
+{#                                <select name="sub1_channal_perms" id="sub1_ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">#}
+{#                                </select>#}
+                            </div>
+
+                            <div style="width:70px; height:auto; float:left; display:inline"><label> 2级子渠道 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                                <input type="text" id="sub2_ch_perms" name="sub2_channal_perms">
+{#                                <select name="sub2_channal_perms" id="sub2_ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">#}
+{#                                </select>#}
+                            </div>
+
+                            <div style="width:70px; height:auto; float:left; display:inline"><label> 3级子渠道 </label></div>
+                            <div style="width:260px; height:auto; float:left; display:inline">
+                                <input type="text" id="sub3_ch_perms" name="sub3_channal_perms">
+{#                                <select name="sub3_channal_perms" id="sub3_ch_perms" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5" data-actions-box="true" style="height:26px">#}
+{#                                </select>#}
+                            </div>
+                            <br><br>
+                        <div style="width:62px; height:auto; float:left; display:inline"><label> 渠道类型 </label></div>
+                            <div style="width:240px; height:auto; float:left; display:inline">
+                                <select id="chtype_perms" class="selectpicker" multiple data-live-search="false" data-selected-text-format="count > 3" data-actions-box="true" name="channaltype_perms" onchange="selectChannelType()">
+                                    <option value="Organic" >Organic</option>
+                                    <option value="Incent" >Incent</option>
+                                    <option value="Non-incent" >Non-incent</option>
+                                    <option value="Share" >Share</option>
+                                </select>
+                            </div>
+                         <div style="width:38px; height:auto; float:left; display:inline"><label> app来源 </label>
+                                </div>
+                                <div style="width:240px; height:auto; float:left; display:inline">
+                                    <select name="source" id="source" class="selectpicker" multiple
+                                            data-live-search="true" data-selected-text-format="count > 3" data-size="5"
+                                            data-actions-box="true" style="height:26px">
+                                        {% for source in sourceValues %}
+                                            <option value={{ source }}>{{ source }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            <label></label>
+                            <label>时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" AUTOCOMPLETE="off"></label>
+                            <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" AUTOCOMPLETE="off"></label>
+                            <br></br>
+                            <div style="width:50px; height:auto; float:left; display:inline"><label> 维度1 </label></div>
+                            <div style="width:230px; height:auto; float:left; display:inline">
+                                <select name="lv_1_dimension" id="lv_1_dimension" class="selectpicker" data-live-search="true" data-size="5" data-actions-box="true" style="height:26px">
+                                    <option value="platform" selected >平台</option>
+                                    <option value="language" >语言</option>
+                                    <option value="country" >国家</option>
+                                    <option value="channel" >渠道</option>
+                                    <option value="sub1_channel" >1级子渠道</option>
+                                </select>
+                            </div>
+                            <div style="width:50px; height:auto; float:left; display:inline"><label> 维度2 </label></div>
+                            <div style="width:230px; height:auto; float:left; display:inline">
+                                <select name="lv_2_dimension" id="lv_2_dimension" class="selectpicker" data-live-search="true" data-size="5" data-actions-box="true" style="height:26px">
+                                    <option value="none" >无</option>
+                                    <option value="platform" >平台</option>
+                                    <option value="language" >语言</option>
+                                    <option value="country"  >国家</option>
+                                    <option value="channel" >渠道</option>
+                                    <option value="sub1_channel" >1级子渠道</option>
+                                </select>
+                            </div>
+                            <div style="width:50px; height:auto; float:left; display:inline"><label> 维度3 </label></div>
+                            <div style="width:230px; height:auto; float:left; display:inline">
+                                <select name="lv_3_dimension" id="lv_3_dimension" class="selectpicker" data-live-search="true" data-size="5" data-actions-box="true" style="height:26px">
+                                    <option value="none" >无</option>
+                                    <option value="platform" >平台</option>
+                                    <option value="language" >语言</option>
+                                    <option value="country"  >国家</option>
+                                    <option value="channel" >渠道</option>
+                                    <option value="sub1_channel" >1级子渠道</option>
+                                </select>
+                            </div>
+                            <div style="width:50px; height:auto; float:left; display:inline"><label> 维度4 </label></div>
+                            <div style="width:230px; height:auto; float:left; display:inline">
+                                <select name="lv_4_dimension" id="lv_4_dimension" class="selectpicker" data-live-search="true" data-size="5" data-actions-box="true" style="height:26px">
+                                    <option value="none" >无</option>
+                                    <option value="platform" >平台</option>
+                                    <option value="language" >语言</option>
+                                    <option value="country"  >国家</option>
+                                    <option value="channel" >渠道</option>
+                                    <option value="sub1_channel" >1级子渠道</option>
+                                </select>
+                            </div>
+                            <div style="width:50px; height:auto; float:left; display:inline"><label> 维度5 </label></div>
+                            <div style="width:230px; height:auto; float:left; display:inline">
+                                <select name="lv_5_dimension" id="lv_5_dimension" class="selectpicker" data-live-search="true" data-size="5" data-actions-box="true" style="height:26px">
+                                    <option value="none" >无</option>
+                                    <option value="platform" >平台</option>
+                                    <option value="language" >语言</option>
+                                    <option value="country"  >国家</option>
+                                    <option value="channel" >渠道</option>
+                                    <option value="sub1_channel" >1级子渠道</option>
+                                </select>
+                            </div>
+
+                            <br></br>
+                            <label><button type="button"  class="btn btn-primary" onclick="retain_day_dime_check()" >查找</button>
+                             </label>
+                            </div>
+                        </form>
+                        </div>
+
+            <div class="tab-content" id="content_id">
+             <div class="tab-pane fade in active" id="game_act">
+	          <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                      <div class="tab-content">
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        </div>
+
+           </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+
+<script type="text/javascript">
+
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd',
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose:true
+    });
+
+    function retain_day_dime_check(){
+        var lv1_dimension = $('#lv_1_dimension').val();
+        var lv2_dimension = $('#lv_2_dimension').val();
+        var lv3_dimension = $('#lv_3_dimension').val();
+        var lv4_dimension = $('#lv_4_dimension').val();
+        var lv5_dimension = $('#lv_5_dimension').val();
+        var dimension = new Array();
+        dimension.push(lv1_dimension);
+        if(lv2_dimension != 'none'){
+            dimension.push(lv2_dimension);
+        }
+        if(lv3_dimension != 'none'){
+            dimension.push(lv3_dimension);
+        }
+        if(lv4_dimension != 'none'){
+            dimension.push(lv4_dimension);
+        }
+        if(lv5_dimension != 'none'){
+            dimension.push(lv5_dimension);
+        }
+        $.post("/retain_day_dime_check/",{
+            sources: $('#source').val(),
+            dimensions:dimension,
+            start_time:$('#start_time').val(),
+            end_time:$('#end_time').val(),
+            languages:$('#language').val(),
+            platforms:$('#platform').val(),
+            countrys:$('#country').val(),
+            channeltypes:$('#chtype_perms').val(),
+            channels: $('#ch_perms').val(),
+            sub1_channels: $('#sub1_ch_perms').val(),
+            sub2_channels: $('#sub2_ch_perms').val(),
+            sub3_channels: $('#sub3_ch_perms').val(),
+            items:$('#items').val(),
+        },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({
+
+        });
+    });
+
+    function selectChannel() {
+        var channels = $("#ch_perms").val();
+        if (channels.length == 1){
+            $.ajax({
+                type: "POST",
+                url : "/retain_sub_channel/",
+                async : false,
+                data : {
+                    "channels" : channels
+                },
+                success : function(response) {
+                    debugger;
+                    $("#sub1_ch_perms").prop('disabled', false);
+                    $("#sub2_ch_perms").prop('disabled', false);
+                    $("#sub3_ch_perms").prop('disabled', false);
+                    $("#sub1_ch_perms").empty();
+                    $("#sub2_ch_perms").empty();
+                    $("#sub3_ch_perms").empty();
+                    sub_info = response['data'];
+                    len1 = sub_info[0].length;
+                    var i = 0;
+                    for (; i<len1; i++){
+                        var temp = sub_info[0][i];
+                        if (temp == 'None'){
+                            continue
+                        }
+                        var show = temp
+                        if (temp.length > 30){
+                            show = temp.substring(0,30) + '...'
+                        }
+
+                        $("#sub1_ch_perms").append(new Option(show,temp));
+                        $('#sub1_ch_perms').selectpicker('refresh');
+                    }
+
+                    len2 = sub_info[1].length;
+                    i = 0;
+                    for (; i<len2; i++){
+                        var temp = sub_info[1][i];
+                        if (temp == 'None'){
+                            continue
+                        }
+                        var show = temp
+                        if (temp.length > 30){
+                            show = temp.substring(0,30) + '...'
+                        }
+
+                        $("#sub2_ch_perms").append(new Option(show,temp));
+                        $('#sub2_ch_perms').selectpicker('refresh');
+                    }
+
+                    len3 = sub_info[2].length;
+                    i = 0;
+                    for (; i<len3; i++){
+                        var temp = sub_info[2][i];
+                        if (temp == 'None'){
+                            continue
+                        }
+                        var show = temp
+                        if (temp.length > 30){
+                            show = temp.substring(0,30) + '...'
+                        }
+
+                        $("#sub3_ch_perms").append(new Option(show,temp));
+                        $('#sub3_ch_perms').selectpicker('refresh');
+                    }
+                }
+            })
+        }
+        else {
+            $("#sub1_ch_perms").prop('disabled', true);
+            $('#sub1_ch_perms').selectpicker('refresh');
+
+            $("#sub2_ch_perms").prop('disabled', true);
+            $('#sub2_ch_perms').selectpicker('refresh');
+
+            $("#sub3_ch_perms").prop('disabled', true);
+            $('#sub3_ch_perms').selectpicker('refresh');
+        }
+
+    }
+
+    function selectChannelType() {
+        var channels = $("#chtype_perms").val();
+        if (channels.length > 0){
+            $("#ch_perms").selectpicker('val',['noneSelectedText']);
+            $("#ch_perms").prop('disabled', true);
+            $('#ch_perms').selectpicker('refresh');
+
+            $("#sub1_ch_perms").selectpicker('val',['noneSelectedText']);
+            $("#sub1_ch_perms").prop('disabled', true);
+            $('#sub1_ch_perms').selectpicker('refresh');
+
+            $("#sub2_ch_perms").selectpicker('val',['noneSelectedText']);
+            $("#sub2_ch_perms").prop('disabled', true);
+            $('#sub2_ch_perms').selectpicker('refresh');
+
+            $("#sub3_ch_perms").selectpicker('val',['noneSelectedText']);
+            $("#sub3_ch_perms").prop('disabled', true);
+            $('#sub3_ch_perms').selectpicker('refresh');
+        }
+        else{
+            $("#ch_perms").prop('disabled', false);
+            $('#ch_perms').selectpicker('refresh');
+
+            $("#sub1_ch_perms").prop('disabled', false);
+            $('#sub1_ch_perms').selectpicker('refresh');
+
+            $("#sub2_ch_perms").prop('disabled', false);
+            $('#sub2_ch_perms').selectpicker('refresh');
+
+            $("#sub3_ch_perms").prop('disabled', false);
+            $('#sub3_ch_perms').selectpicker('refresh');
+        }
+    }
+
+
+</script>

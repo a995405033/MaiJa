@@ -1,0 +1,69 @@
+{% load i18n %}
+
+     <div class="tab-pane fade in active" id="all_act">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+             <div class="panel-body">
+
+              <div class="tab-content">
+                 <div class="tab-pane fade in active" id="profile">
+                   <div class="row">
+                        <div class="col-lg-12">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="report_total_table">
+                                <thead>
+                                    <tr class="thr_o">
+                                    <th class="text-center">日期</th>
+                                    <th class="text-center">总量级</th>
+                                    <th class="text-center">广告</th>
+                                    <th class="text-center">自然</th>
+                                    <th class="text-center">激励性</th>
+                                    <th class="text-center">非激励性</th>
+                                    <th class="text-center">分享性</th>
+                                    <th class="text-center">GCC6激励性</th>
+                                    <th class="text-center">非GCC6激励性</th>
+                                    <th class="text-center">GCC6非激励性</th>
+                                    <th class="text-center">非GCC6非激励性</th>
+                                    <th class="text-center">GCC6自然</th>
+                                    <th class="text-center">非GCC6自然</th>
+                                    <th class="text-center">GCC6分享性</th>
+                                    <th class="text-center">非GCC6分享性</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for el in report_quantity_list %}
+                                    <tr class="odd gradeX tdr_o">
+                                        {% for e in el %}
+                                            <td class="text-center" style="text-align:center;vertical-align:middle">{{ e }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                           </div>
+                      </div>
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#report_total_table').DataTable({
+            "sScrollX": true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+             ]
+        });
+    });
+
+</script>

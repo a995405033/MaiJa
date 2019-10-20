@@ -1,0 +1,217 @@
+{% load i18n %}
+
+     <div class="tab-pane fade in active" id="roi_act">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+             <div class="panel-body">
+
+              <div class="tab-content">
+                 <div class="tab-pane fade in active" id="profile">
+                   <div class="row">
+                        <div class="col-lg-12" style="overflow:auto;">
+                            <table width="100%"  class="table table-striped table-bordered table-hover"
+                                   id="report_total_table">
+                               <thead>
+                                    <tr class="thr_o">
+                                        {% for e in roi_head %}
+                                            <th class="text-center">{{ e }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for el in roi_week_list %}
+                                    <tr class="odd gradeX tdr_o">
+                                        {% for e in el %}
+{#                                            {% if forloop.counter < forloop.parentloop.counter %}#}
+                                                <td class="text-center" style="text-align:center;vertical-align:middle">{{ e | safe }}</td>
+{#                                            {% endif %}#}
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                   </div>
+              </div>
+           </div>
+        <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+ <div class="tab-pane fade" id="pay_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12" style="overflow:auto;">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="report_ios_table">
+                                        <thead>
+                                            <tr class="thr_o">
+                                                {% for e in pay_head %}
+                                                    <th class="text-center">{{ e | safe}}</th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for el in pay_week_list %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ e | safe }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                               </div>
+				              </div>
+				           </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+
+
+<div class="tab-pane fade" id="arppu_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12" style="overflow:auto;">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="report_android_table">
+                                        <thead>
+                                            <tr class="thr_o">
+                                                {% for e in arppu_head %}
+                                                    <th class="text-center">{{ e }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for el in arppu_week_list %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ e | safe }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                               </div>
+				              </div>
+				           </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+
+<div class="tab-pane fade" id="ltv_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12" style="overflow:auto;">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="report_ltv_table">
+                                       <thead>
+                                            <tr class="thr_o">
+                                                {% for e in ltv_head %}
+                                                    <th class="text-center">{{ e }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for el in ltv_week_list %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ e | safe }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                               </div>
+				              </div>
+				           </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+
+
+<script type="text/javascript">
+    debugger
+    $(document).ready(function() {
+        $('#report_total_table').DataTable({
+            ordering: false,
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+     $(document).ready(function() {
+        $('#report_ios_table').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+     $(document).ready(function() {
+        $('#report_android_table').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+     $(document).ready(function() {
+        $('#report_ltv_table').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+</script>

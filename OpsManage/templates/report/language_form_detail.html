@@ -1,0 +1,231 @@
+{% load i18n %}
+<input type="text" id="date_1" value="{{ date }}" style="display: none">
+<input type="text" id="new_act_1" value="{{ chart.new_act }}" style="display: none">
+<input type="text" id="ad_act_1" value="{{ chart.ad_act }}" style="display: none">
+<input type="text" id="nature_act_1" value="{{ chart.nature_act }}" style="display: none">
+<input type="text" id="ad_pernew_cost_2" value="{{ chart.ad_pernew_cost }}" style="display: none">
+<input type="text" id="ad_perad_cost_2" value="{{ chart.ad_perad_cost }}" style="display: none">
+<input type="text" id="recharge_amount_3" value="{{ chart.recharge_amount }}" style="display: none">
+
+<input type="text" id="new_act_ios_1" value="{{ chart_ios.new_act }}" style="display: none">
+<input type="text" id="ad_act_ios_1" value="{{ chart_ios.ad_act }}" style="display: none">
+<input type="text" id="nature_act_ios_1" value="{{ chart_ios.nature_act }}" style="display: none">
+<input type="text" id="ad_pernew_cost_ios_2" value="{{ chart_ios.ad_pernew_cost }}" style="display: none">
+<input type="text" id="ad_perad_cost_ios_2" value="{{ chart_ios.ad_perad_cost }}" style="display: none">
+<input type="text" id="recharge_amount_ios_3" value="{{ chart_ios.recharge_amount }}" style="display: none">
+
+<input type="text" id="new_act_android_1" value="{{ chart_android.new_act }}" style="display: none">
+<input type="text" id="ad_act_android_1" value="{{ chart_android.ad_act }}" style="display: none">
+<input type="text" id="nature_act_android_1" value="{{ chart_android.nature_act }}" style="display: none">
+<input type="text" id="ad_pernew_cost_android_2" value="{{ chart_android.ad_pernew_cost }}" style="display: none">
+<input type="text" id="ad_perad_cost_android_2" value="{{ chart_android.ad_perad_cost }}" style="display: none">
+<input type="text" id="recharge_amount_android_3" value="{{ chart_android.recharge_amount }}" style="display: none">
+
+<div class="tab-pane fade in active" id="all_act">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="profile">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table width="100%" class="table table-striped table-bordered table-hover"
+                                           id="report_total_table">
+                                        <thead>
+                                        <tr class="thr_o">
+                                            {% for h in thhead %}
+                                                <th class="text-center">{{ h }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for el in df_out %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center"
+                                                        style="text-align:center;vertical-align:middle">{{ e }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+<div class="tab-pane fade" id="ios_act">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="profile">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table width="100%" class="table table-striped table-bordered table-hover"
+                                           id="report_ios_table">
+                                        <thead>
+                                        <tr class="thr_o">
+                                            {% for h in thhead %}
+                                                <th class="text-center">{{ h }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for el in df_ios_out %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center"
+                                                        style="text-align:center;vertical-align:middle">{{ e }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+
+<div class="tab-pane fade" id="android_act">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="profile">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table width="100%" class="table table-striped table-bordered table-hover"
+                                           id="report_android_table">
+                                        <thead>
+                                        <tr class="thr_o">
+                                            {% for h in thhead %}
+                                                <th class="text-center">{{ h }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for el in df_android_out %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center"
+                                                        style="text-align:center;vertical-align:middle">{{ e }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var date_1 = $('#date_1').val();
+    var date_1_arr = date_1.substring(2, date_1.length - 2).split('", "');
+    var new_act_1 = $('#new_act_1').val();
+    var new_act_1_arr = new_act_1.substring(1, new_act_1.length - 1).split(',');
+    var ad_act_1 = $('#ad_act_1').val();
+    var ad_act_1_arr = ad_act_1.substring(1, ad_act_1.length - 1).split(',');
+    var nature_act_1 = $('#nature_act_1').val();
+    var nature_act_1_arr = nature_act_1.substring(1, nature_act_1.length - 1).split(',');
+    var ad_pernew_cost_2 = $('#ad_pernew_cost_2').val();
+    var ad_pernew_cost_2_arr = ad_pernew_cost_2.substring(2, ad_pernew_cost_2.length - 2).split('", "');
+    var ad_perad_cost_2 = $('#ad_perad_cost_2').val();
+    var ad_perad_cost_2_arr = ad_perad_cost_2.substring(2, ad_perad_cost_2.length - 2).split('", "');
+    var recharge_amount_3 = $('#recharge_amount_3').val();
+    var recharge_amount_3_arr = recharge_amount_3.substring(1, recharge_amount_3.length - 1).split(',');
+
+    var new_act_ios_1 = $('#new_act_ios_1').val();
+    var new_act_ios_1_arr = new_act_ios_1.substring(1, new_act_ios_1.length - 1).split(',');
+    var ad_act_ios_1 = $('#ad_act_ios_1').val();
+    var ad_act_ios_1_arr = ad_act_ios_1.substring(1, ad_act_ios_1.length - 1).split(',');
+    var nature_act_ios_1 = $('#nature_act_ios_1').val();
+    var nature_act_ios_1_arr = nature_act_ios_1.substring(1, nature_act_ios_1.length - 1).split(',');
+    var ad_pernew_cost_ios_2 = $('#ad_pernew_cost_ios_2').val();
+    var ad_pernew_cost_ios_2_arr = ad_pernew_cost_ios_2.substring(2, ad_pernew_cost_ios_2.length - 2).split('", "');
+    var ad_perad_cost_ios_2 = $('#ad_perad_cost_ios_2').val();
+    var ad_perad_cost_ios_2_arr = ad_perad_cost_ios_2.substring(2, ad_perad_cost_ios_2.length - 2).split('", "');
+    var recharge_amount_ios_3 = $('#recharge_amount_ios_3').val();
+    var recharge_amount_ios_3_arr = recharge_amount_ios_3.substring(1, recharge_amount_ios_3.length - 1).split(',');
+
+    var new_act_android_1 = $('#new_act_android_1').val();
+    var new_act_android_1_arr = new_act_android_1.substring(1, new_act_android_1.length - 1).split(',');
+    var ad_act_android_1 = $('#ad_act_android_1').val();
+    var ad_act_android_1_arr = ad_act_android_1.substring(1, ad_act_android_1.length - 1).split(',');
+    var nature_act_android_1 = $('#nature_act_android_1').val();
+    var nature_act_android_1_arr = nature_act_android_1.substring(1, nature_act_android_1.length - 1).split(',');
+    var ad_pernew_cost_android_2 = $('#ad_pernew_cost_android_2').val();
+    var ad_pernew_cost_android_2_arr = ad_pernew_cost_android_2.substring(2, ad_pernew_cost_android_2.length - 2).split('", "');
+    var ad_perad_cost_android_2 = $('#ad_perad_cost_android_2').val();
+    var ad_perad_cost_android_2_arr = ad_perad_cost_android_2.substring(2, ad_perad_cost_android_2.length - 2).split('", "');
+    var recharge_amount_android_3 = $('#recharge_amount_android_3').val();
+    var recharge_amount_android_3_arr = recharge_amount_android_3.substring(1, recharge_amount_android_3.length - 1).split(',');
+
+    $(document).ready(function () {
+        $('#report_total_table').DataTable({
+            dom: 'Bfrtip',
+            'scrollX': true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#report_ios_table').DataTable({
+            dom: 'Bfrtip',
+            'scrollX': true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#report_android_table').DataTable({
+            dom: 'Bfrtip',
+            'scrollX': true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+
+
+</script>

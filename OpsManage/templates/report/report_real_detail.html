@@ -1,0 +1,299 @@
+{% load i18n %}
+<input type="text" id="date_total" value="{{ date_total }}" style="display: none">
+<input type="text" id="pre_new_activate" value="{{ pre_new_activate }}" style="display: none">
+<input type="text" id="new_activate" value="{{ new_activate }}" style="display: none">
+<input type="text" id="new_activate_ios" value="{{ new_activate_ios }}" style="display: none">
+<input type="text" id="new_activate_android" value="{{ new_activate_android }}" style="display: none">
+<input type="text" id="pre_new_activate_ios" value="{{ pre_new_activate_ios }}" style="display: none">
+<input type="text" id="pre_new_activate_android" value="{{ pre_new_activate_android }}" style="display: none">
+
+     <div class="tab-pane fade in active" id="all_act">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+             <div class="panel-body">
+
+              <div class="tab-content">
+                 <div class="tab-pane fade in active" id="profile">
+                   <div class="row">
+                        <div class="col-lg-12">
+                            <div id="chart_1" style="width:1480px; height:300px;"></div>
+                                </div>
+                           </div>
+                      </div>
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+ <div class="tab-pane fade" id="ios_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12">
+                                     <div id="chart_2" style="width:1480px; height:300px;"></div>
+
+                                </div>
+                               </div>
+				              </div>
+				           </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+
+
+<div class="tab-pane fade" id="android_act">
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12">
+
+                                     <div id="chart_3" style="width:1480px; height:300px;"></div>
+                                </div>
+                               </div>
+				              </div>
+				           </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+             </div>
+            </div>
+
+
+             <div class="tab-pane fade" id="data_act">
+	          <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                     <div class="panel-body">
+
+                      <div class="tab-content">
+                         <div class="tab-pane fade in active" id="profile">
+                           <div class="row">
+                                <div class="col-lg-12">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="report_real_table">
+                                        <thead>
+                                            <tr class="thr_o">
+                                            <th class="text-center">日期/小时</th>
+                                            <th class="text-center">IOS量</th>
+                                            <th class="text-center">Android量</th>
+                                            <th class="text-center">总量</th>
+                                            <th class="text-center">IOS累计</th>
+                                            <th class="text-center">Android累计</th>
+                                            <th class="text-center">总量累计</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for el in df_show_list %}
+                                            <tr class="odd gradeX tdr_o">
+                                                {% for e in el %}
+                                                    <td class="text-center" style="text-align:center;vertical-align:middle">{{ e }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                           </div>
+                      </div>
+                   </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#report_real_table').DataTable({
+            ordering: false,
+            responsive: true,
+            aLengthMenu: [50, 100, 150],
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+    var date_total = $('#date_total').val();
+    var date_total_obj=eval("("+date_total+")");
+    var pre_new_activate = $('#pre_new_activate').val();
+    var pre_new_activate_obj=eval("("+pre_new_activate+")");
+    var new_activate = $('#new_activate').val();
+    var new_activate_obj=eval("("+new_activate+")");
+    var new_activate_ios = $('#new_activate_ios').val();
+    var new_activate_ios_obj=eval("("+new_activate_ios+")");
+    var new_activate_android = $('#new_activate_android').val();
+    var new_activate_android_obj=eval("("+new_activate_android+")");
+    var pre_new_activate_ios = $('#pre_new_activate_ios').val();
+    var pre_new_activate_ios_obj=eval("("+pre_new_activate_ios+")");
+    var pre_new_activate_android = $('#pre_new_activate_android').val();
+    var pre_new_activate_android_obj=eval("("+pre_new_activate_android+")");
+
+    var myChart_1 = echarts.init(document.getElementById('chart_1'));
+    var option_1 = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['今日','昨日']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date_total_obj
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'今日',
+            type:'line',
+            data:new_activate_obj
+        },
+        {
+            name:'昨日',
+            type:'line',
+            data:pre_new_activate_obj
+        }
+    ]
+    };
+    myChart_1.setOption(option_1);
+
+    var myChart_2 = echarts.init(document.getElementById('chart_2'));
+    var option_2 = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['今日','昨日']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date_total_obj
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'今日',
+            type:'line',
+            data:new_activate_ios_obj
+        },
+        {
+            name:'昨日',
+            type:'line',
+            data:pre_new_activate_ios_obj
+        }
+    ]
+    };
+    myChart_2.setOption(option_2);
+
+    var myChart_3 = echarts.init(document.getElementById('chart_3'));
+    var option_3 = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['今日','昨日']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date_total_obj
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'今日',
+            type:'line',
+            data:new_activate_android_obj
+        },
+        {
+            name:'昨日',
+            type:'line',
+            data:pre_new_activate_android_obj
+        },
+    ]
+    };
+    myChart_3.setOption(option_3);
+
+</script>

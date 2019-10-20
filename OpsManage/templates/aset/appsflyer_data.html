@@ -1,0 +1,138 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="#">数据分析</a></li>
+            <li><a href="#">广告配置</a></li>
+            <li><a href="#">广告渠道</a></li>
+        </ol>
+    </div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>appsflyer数据提取</h3>
+	</div>
+</div>
+
+<div id="page-wrapper">
+	<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="well">
+
+             <label>分析时间范围 <input  type="text" id="start_time" name="start_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                    <label><i class="fa fa-exchange"></i> <input  type="text"  id="end_time" name="end_time"  placeholder="" class="form_datetime" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+            <label><button type="button"  class="btn btn-primary" onclick="channel_analysis_check()" ><i class="fa fa-search"></i>提取</button>
+                    </label>
+            </div>
+
+            <div class="well">
+
+             <label>充值时间范围 <input  type="text" id="charge_start_time" name="charge_start_time" class="charge_form_datetime"  placeholder="" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                  <label> <select name="offset" id="offset"   style="display: block;" >
+                        <option value="3600">小时</option>
+                        <option value="86400">天</option>
+                   </select>
+                  </label>
+            <label><button type="button"  class="btn btn-primary" onclick="charge_check()" ><i class="fa fa-search"></i>提取</button>
+                    </label>
+            </div>
+
+            <div class="well">
+
+             <label>渠道合并数据 <input  type="text" id="channel_start_time" name="channel_start_time" class="form_datetime"  placeholder="" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+
+            <label><button type="button"  class="btn btn-primary" onclick="channel_check()" ><i class="fa fa-search"></i>提取</button>
+                    </label>
+            </div>
+
+             <div class="well">
+
+             <label>ROI <input  type="text" id="roi_start_time" name="roi_start_time" class="form_datetime"  placeholder="" data-date-format="yyyy-mm-dd HH:mm:00" title="例如2017-01-01"></label>
+                  <label> <select name="roi_offset" id="roi_offset"   style="display: block;" >
+                        <option value=1>周</option>
+                        <option value=2>月</option>
+                        <option value=3>天</option>
+                        <option value=4>充值分析周</option>
+                        <option value=5>充值分析月</option>
+                   </select>
+                  </label>
+            <label><button type="button"  class="btn btn-primary" onclick="roi_check()" ><i class="fa fa-search"></i>提取</button>
+                    </label>
+            </div>
+       <!-- /.row (nested) -->
+       </div>
+      <!-- /.panel-body -->
+      </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+ </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+     function channel_analysis_check(){
+         $.post("/appsflyer_data_check/",{
+             start_time:$('#start_time').val(),
+             end_time:$('#end_time').val()
+
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    function charge_check(){
+         $.post("/charge_data_check/",{
+             charge_start_time:$('#charge_start_time').val(),
+             offset:$('#offset').val()
+
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    function channel_check(){
+         $.post("/channel_data_check/",{
+             channel_start_time:$('#channel_start_time').val(),
+
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+     function roi_check(){
+         $.post("/roi_check/",{
+             roi_start_time:$('#roi_start_time').val(),
+             roi_offset:$('#roi_offset').val()
+
+         },function(data){
+            $("#content_id").html(data);
+        });
+    }
+
+    $(".form_datetime").datetimepicker({
+        minView: "month",
+    　　format: "yyyy-mm-dd",
+    　　autoclose:true
+    });
+
+     $(".charge_form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+
+
+    $(document).ready(function() {
+        var oTable = $('#ad_config_table').dataTable( {
+            "bPaginate": false,
+            "bStateSave": true,
+            dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+        } );
+    } );
+
+
+
+</script>
